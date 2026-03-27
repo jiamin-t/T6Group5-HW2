@@ -2,10 +2,43 @@
 //
 
 #include <iostream>
+#include "csv_parser.h"
+#include "ring.h"
 
-int main()
-{
-    std::cout << "Hello World!\n";
+int main(int argc, char* argv[]) {
+    if (argc != 3) {
+        std::cerr << "Usage: " << argv[0] << " <input_file.csv> <target_vertices>\n";
+        return 1;
+    }
+
+    std::string filename = argv[1];
+    int target = std::stoi(argv[2]);
+
+    auto parsed = CSV::parse_csv(filename);
+
+    // build ring
+    std::vector<Ring*> rings;
+    for (auto& [rid, verts] : parsed) {
+        rings.push_back(new Ring(rid, verts));
+    }
+
+    // for testing
+    std::cout << "ring_id,vertex_id,x,y\n";
+    for (auto* ring : rings) {
+        Node* start = ring->nodes[0];
+        Node* cur = start;
+        int vid = 0;
+        do {
+            std::cout << ring->ringID << "," << vid++ << ","
+                      << cur->x << "," << cur->y << "\n";
+            cur = cur->next;
+        } while (cur != start);
+    }
+
+    // cleanup
+    for (auto* r : rings) delete r;
+
+    return 0;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
