@@ -5,7 +5,7 @@
 #include <iomanip>
 #include "csv_parser.h"
 #include "ring.h"
-#include "simplifer.h"
+#include "simplifier.h"
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
