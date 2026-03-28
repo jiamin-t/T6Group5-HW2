@@ -1,4 +1,4 @@
-SRCS = HWProject2.cpp csv_parser.cpp ring.cpp geo.cpp
+SRCS = HWProject2.cpp csv_parser.cpp ring.cpp geo.cpp simplifier.cpp
 TARGET = simplify
 
 $(TARGET): $(SRCS)

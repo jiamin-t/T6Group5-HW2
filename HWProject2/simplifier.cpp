@@ -1,6 +1,6 @@
-#include "simplifier.h"
-#include "geo.h"
 #include <queue>
+#include "geo.h"
+#include "simplifier.h"
 
 // One entry in the priority queue: collapsing A->B->C->D into A->E->D.
 // B and C get removed; E is inserted between A and D.
