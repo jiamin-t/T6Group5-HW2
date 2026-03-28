@@ -38,3 +38,21 @@ void Ring::insert_node(Node* new_node, Node* prev_node, Node* next_node) {
     nodes.push_back(new_node);
     size++;
 }
+
+Node* Ring::active_head() const {
+    for (Node* n : nodes)
+        if (n->active) return n;
+    return nullptr;
+}
+
+double Ring::signed_area() const {
+    double area = 0.0;
+    Node* start = active_head();
+    if (!start) return 0.0; // empty ring
+    Node* cur = start;
+    do {
+        area += cur->x * cur->next->y - cur->next->x * cur->y;
+        cur = cur->next;
+    } while (cur != start);
+    return 0.5 * area;
+}

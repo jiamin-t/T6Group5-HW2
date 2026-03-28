@@ -26,4 +26,7 @@ namespace GEO {
 
     // compute areal displacement of replacing A->B->C->D with A->E->D
     double areal_displacement(Point A, Point B, Point C, Point D, Point E);
+
+	// Check if segments p1-p2 and p3-p4 intersect (excluding endpoints)
+	bool segments_intersect(Point p1, Point p2, Point p3, Point p4);
 }

@@ -27,4 +27,10 @@ struct Ring {
 
     // insert new_node
     void insert_node(Node* new_node, Node* prev_node, Node* next_node);
+
+	// return pointer to an active node (nullptr if empty)
+    Node* active_head() const;
+
+    //shoelace signed area
+	double signed_area() const;
 };

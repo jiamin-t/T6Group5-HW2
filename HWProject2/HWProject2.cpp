@@ -2,8 +2,10 @@
 //
 
 #include <iostream>
+#include <iomanip>
 #include "csv_parser.h"
 #include "ring.h"
+#include "simplifer.h"
 
 int main(int argc, char* argv[]) {
     if (argc != 3) {
@@ -14,30 +16,51 @@ int main(int argc, char* argv[]) {
     std::string filename = argv[1];
     int target = std::stoi(argv[2]);
 
+    // Parse + build rings
     auto parsed = CSV::parse_csv(filename);
-
-    // build ring
     std::vector<Ring*> rings;
-    for (auto& [rid, verts] : parsed) {
+    for (auto& [rid, verts] : parsed)
         rings.push_back(new Ring(rid, verts));
-    }
 
-    // for testing
+    // Record input area before any changes
+    double input_area = 0.0;
+    for (Ring* r : rings) input_area += r->signed_area();
+
+    int total_in = 0;
+    for (Ring* r : rings) total_in += r->size;
+    std::cerr << "Input vertices: " << total_in << "  Target: " << target << "\n";
+
+	//run simplification
+    double areal_disp = simplify(rings, target);
+
+    int total_out = 0;
+    for (Ring* r : rings) total_out += r->size;
+    std::cerr << "Output vertices: " << total_out << "\n";
+
+	//print output CSV
     std::cout << "ring_id,vertex_id,x,y\n";
-    for (auto* ring : rings) {
-        Node* start = ring->nodes[0];
+    for (Ring* ring : rings) {
+        Node* start = ring->active_head();
+        if (!start) continue;
         Node* cur = start;
         int vid = 0;
         do {
             std::cout << ring->ringID << "," << vid++ << ","
-                      << cur->x << "," << cur->y << "\n";
+                << cur->x << "," << cur->y << "\n";
             cur = cur->next;
         } while (cur != start);
     }
 
-    // cleanup
-    for (auto* r : rings) delete r;
+	//print area stats
+    double output_area = 0.0;
+    for (Ring* r : rings) output_area += r->signed_area();
 
+    std::cout << std::scientific << std::setprecision(6);
+    std::cout << "Total signed area in input: " << input_area << "\n";
+    std::cout << "Total signed area in output: " << output_area << "\n";
+    std::cout << "Total areal displacement: " << areal_disp << "\n";
+
+    for (Ring* r : rings) delete r;
     return 0;
 }
 
