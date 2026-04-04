@@ -22,3 +22,5 @@
 /usr/bin/time -v ./simplify test/custom_03_5000verts.csv 99 > /dev/null
 /usr/bin/time -v ./simplify test/custom_04_many_holes.csv 50 > /dev/null
 /usr/bin/time -v ./simplify test/custom_05_near_degeneracy.csv 10 > /dev/null
+
+# check makefile for a more comprehensive guide
