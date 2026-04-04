@@ -1,0 +1,24 @@
+# Custom Test Dataset Commands
+# Run from project root directory
+
+# custom_01: High Vertex Count (1,000 vertices)
+./simplify test/custom_01_1000verts.csv 99
+
+# custom_02: High Vertex Count (3,000 vertices)
+./simplify test/custom_02_3000verts.csv 99
+
+# custom_03: High Vertex Count (5,000 vertices) — ~35 seconds
+./simplify test/custom_03_5000verts.csv 99
+
+# custom_04: Many Holes (240 vertices, 10 interior rings)
+./simplify test/custom_04_many_holes.csv 50
+
+# custom_05: Near-Degeneracy (32 vertices, thin spikes)
+./simplify test/custom_05_near_degeneracy.csv 10
+
+# To measure runtime and memory for each:
+/usr/bin/time -v ./simplify test/custom_01_1000verts.csv 99 > /dev/null
+/usr/bin/time -v ./simplify test/custom_02_3000verts.csv 99 > /dev/null
+/usr/bin/time -v ./simplify test/custom_03_5000verts.csv 99 > /dev/null
+/usr/bin/time -v ./simplify test/custom_04_many_holes.csv 50 > /dev/null
+/usr/bin/time -v ./simplify test/custom_05_near_degeneracy.csv 10 > /dev/null
