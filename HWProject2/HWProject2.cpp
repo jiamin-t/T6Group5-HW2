@@ -28,14 +28,14 @@ int main(int argc, char* argv[]) {
 
     int total_in = 0;
     for (Ring* r : rings) total_in += r->size;
-    std::cerr << "Input vertices: " << total_in << "  Target: " << target << "\n";
+    //std::cerr << "Input vertices: " << total_in << "  Target: " << target << "\n";
 
 	//run simplification
     double areal_disp = simplify(rings, target);
 
     int total_out = 0;
     for (Ring* r : rings) total_out += r->size;
-    std::cerr << "Output vertices: " << total_out << "\n";
+    //std::cerr << "Output vertices: " << total_out << "\n";
 
 	//print output CSV
     std::cout << "ring_id,vertex_id,x,y\n";
